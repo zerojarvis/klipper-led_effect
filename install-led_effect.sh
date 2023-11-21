@@ -29,7 +29,7 @@ SRCDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/src/ && pwd )"
 # Verify Klipper has been installed
 check_klipper()
 {
-    if [ "$(sudo systemctl list-units --full -all -t service --no-legend | grep -F "klipper.service")" ]; then
+    if [ "$(sudo systemctl list-units --full -all -t service --no-legend | grep -P "klipper.*.service")" ]; then
         echo "Klipper service found."
     else
         echo "[ERROR] Klipper service not found, please install Klipper first"
@@ -64,7 +64,7 @@ link_extension()
 restart_moonraker()
 {
     echo -n "Restarting Moonraker... "
-    sudo systemctl restart moonraker
+    sudo systemctl restart -all 'moonraker*'
     echo "[OK]"
 }
 
@@ -90,21 +90,21 @@ add_updater()
 restart_klipper()
 {
     echo -n "Restarting Klipper... "
-    sudo systemctl restart klipper
+    sudo systemctl restart --all 'klipper*'
     echo "[OK]"
 }
 
 start_klipper()
 {
     echo -n "Starting Klipper... "
-    sudo systemctl start klipper
+    sudo systemctl start --all 'klipper*'
     echo "[OK]"
 }
 
 stop_klipper()
 {
     echo -n "Stopping Klipper... "
-    sudo systemctl stop klipper
+    sudo systemctl stop --all 'klipper*'    
     echo "[OK]"
 }
 
